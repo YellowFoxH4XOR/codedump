@@ -155,4 +155,8 @@ export class ChatBotComponent {
       }, 1000);
     }
   }
+
+  resetChat() {
+    this.chatService.clearMessages();
+  }
 }

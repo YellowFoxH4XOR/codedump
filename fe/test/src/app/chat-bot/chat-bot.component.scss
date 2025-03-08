@@ -63,14 +63,35 @@
     font-size: 16px;
   }
   
-  .close-btn {
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .reset-btn, .close-btn {
     background: none;
     border: none;
     color: white;
-    font-size: 24px;
     cursor: pointer;
     padding: 0;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  
+  .reset-btn {
+    font-size: 18px;
+  }
+  
+  .close-btn {
+    font-size: 24px;
   }
 }
 
