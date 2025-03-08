@@ -65,8 +65,10 @@
   border-radius: 18px;
   max-width: 85%;
   width: fit-content;
-  word-break: break-word;
+  word-wrap: break-word;
   overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
   
   &.bot-message {
     background-color: #f1f0f0;
