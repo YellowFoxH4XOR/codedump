@@ -1,6 +1,7 @@
+// Chat bot container and icon
 .chat-bot-container {
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   z-index: 1000;
 }
@@ -9,7 +10,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #0084ff;
+  background-color: #e74c3c; // Red when closed
   border: none;
   cursor: pointer;
   display: flex;
@@ -23,7 +24,7 @@
   }
   
   &.active {
-    background-color: #0063cc;
+    background-color: #2ecc71; // Green when open
   }
   
   svg {
@@ -33,8 +34,7 @@
   }
 }
 
-// Add these styles to fix the message width and improve formatting
-
+// Chat window
 .chat-window {
   position: absolute;
   bottom: 80px;
@@ -49,101 +49,7 @@
   overflow: hidden;
 }
 
-.chat-messages {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.message {
-  padding: 12px 16px;
-  border-radius: 18px;
-  max-width: 85%;
-  width: fit-content;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
-  
-  &.bot-message {
-    background-color: #f1f0f0;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-  
-  &.user-message {
-    background-color: #0084ff;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  }
-}
-
-// Code formatting styles
-.code-container {
-  margin: 8px 0;
-  border-radius: 6px;
-  overflow: hidden;
-  width: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.code-header {
-  background-color: #2d2d2d;
-  color: #f8f8f8;
-  padding: 4px 10px;
-  font-family: monospace;
-  font-size: 12px;
-}
-
-.code-block {
-  background-color: #f5f5f5;
-  padding: 10px;
-  margin: 0;
-  overflow-x: auto;
-  font-family: monospace;
-  font-size: 13px;
-  line-height: 1.4;
-  max-width: 100%;
-}
-
-.inline-code {
-  background-color: #f0f0f0;
-  border-radius: 3px;
-  padding: 2px 4px;
-  font-family: monospace;
-  font-size: 0.9em;
-  color: #e83e8c;
-}
-
-.chat-list {
-  margin: 5px 0;
-  padding-left: 20px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-// Fix for long words and URLs
-.message * {
-  max-width: 100%;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
-}
-
-// Ensure images don't overflow
-.message img {
-  max-width: 100%;
-  height: auto;
-}
+// Chat header
 .chat-header {
   padding: 15px;
   background-color: #0084ff;
@@ -168,6 +74,7 @@
   }
 }
 
+// Chat messages container
 .chat-messages {
   flex: 1;
   padding: 15px;
@@ -175,28 +82,51 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Message bubbles
+.message {
+  padding: 12px 16px;
+  border-radius: 18px;
+  max-width: 85%;
+  width: auto;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease-in-out;
   
-  .message {
-    padding: 10px 15px;
-    border-radius: 18px;
-    max-width: 80%;
+  &.bot-message {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  &.user-message {
+    background-color: #0084ff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  // Fix for all elements inside messages
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     word-break: break-word;
-    
-    &.bot-message {
-      background-color: #f1f0f0;
-      align-self: flex-start;
-      border-bottom-left-radius: 5px;
-    }
-    
-    &.user-message {
-      background-color: #0084ff;
-      color: white;
-      align-self: flex-end;
-      border-bottom-right-radius: 5px;
-    }
+    hyphens: auto;
   }
 }
 
+// Chat input
 .chat-input {
   padding: 15px;
   display: flex;
@@ -231,6 +161,7 @@
   }
 }
 
+// Loading spinner
 .loading-spinner {
   display: flex;
   align-items: center;
@@ -253,6 +184,161 @@
     color: #666;
     font-style: italic;
   }
+}
+
+// Code formatting
+.code-container {
+  margin: 12px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.code-header {
+  background-color: #2d2d2d;
+  color: #f8f8f8;
+  padding: 6px 12px;
+  font-family: monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.code-block {
+  background-color: #f5f5f5;
+  border-radius: 0 0 8px 8px;
+  padding: 12px;
+  margin: 0;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap !important;
+  word-break: break-word;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.inline-code {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-family: 'Fira Code', monospace, sans-serif;
+  font-size: 0.9em;
+  color: #e83e8c;
+}
+
+// Markdown formatting
+.chat-heading {
+  margin: 16px 0 8px 0;
+  font-weight: 600;
+  line-height: 1.3;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h1.chat-heading {
+  font-size: 1.5em;
+  color: #333;
+}
+
+h2.chat-heading {
+  font-size: 1.3em;
+  color: #444;
+}
+
+h3.chat-heading {
+  font-size: 1.1em;
+  color: #555;
+}
+
+.chat-list {
+  margin: 8px 0;
+  padding-left: 24px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+  &.ordered {
+    counter-reset: item;
+  }
+}
+
+.chat-list-item {
+  margin-bottom: 6px;
+  line-height: 1.5;
+  
+  &.ordered {
+    counter-increment: item;
+  }
+}
+
+.chat-quote {
+  border-left: 4px solid #0084ff;
+  padding: 8px 12px;
+  margin: 12px 0;
+  background-color: rgba(0, 132, 255, 0.05);
+  color: #555;
+  font-style: italic;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-link {
+  color: #0084ff;
+  text-decoration: none;
+  border-bottom: 1px dotted #0084ff;
+  word-break: break-all;
+  
+  &:hover {
+    text-decoration: none;
+    border-bottom: 1px solid #0084ff;
+  }
+}
+
+.chat-divider {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  margin: 16px 0;
+  width: 100%;
+}
+
+// Fix for specific elements
+pre, code {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+}
+
+// Ensure images don't overflow
+.message img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Basic list styling
+ul {
+  margin: 5px 0;
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes spin {
