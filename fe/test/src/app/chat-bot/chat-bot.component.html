@@ -20,6 +20,11 @@
            [ngClass]="{'bot-message': message.isBot, 'user-message': !message.isBot}">
         {{ message.text }}
       </div>
+      <!-- Add this somewhere in your chat-messages div, after the messages loop -->
+      <div *ngIf="isLoading" class="loading-spinner">
+        <div class="spinner"></div>
+        <span>{{ botName }} is typing...</span>
+      </div>
     </div>
     
     <div class="chat-input">

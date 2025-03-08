@@ -7,8 +7,10 @@ import { Component } from '@angular/core';
 })
 export class ChatBotComponent {
   isOpen = false;
+  botName = 'Nestor';
+  isLoading = false;
   messages: {text: string, isBot: boolean}[] = [
-    {text: 'Hi there! How can I help you today?', isBot: true}
+    {text: `Hi there! I'm ${this.botName}. How can I help you today?`, isBot: true}
   ];
   newMessage = '';
 
@@ -22,13 +24,18 @@ export class ChatBotComponent {
       this.messages.push({text: this.newMessage, isBot: false});
       const userMessage = this.newMessage;
       this.newMessage = '';
+      
+      // Show loading spinner
+      this.isLoading = true;
 
       // Simulate bot response after a short delay
       setTimeout(() => {
         this.messages.push({
-          text: `Thanks for your message: "${userMessage}". This is a demo response.`,
+          text: `Thanks for your message: "${userMessage}". This is a demo response from ${this.botName}.`,
           isBot: true
         });
+        // Hide loading spinner
+        this.isLoading = false;
       }, 1000);
     }
   }

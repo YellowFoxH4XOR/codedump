@@ -1,6 +1,6 @@
 .chat-bot-container {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   right: 20px;
   z-index: 1000;
 }
@@ -132,4 +132,32 @@
       height: 24px;
     }
   }
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-top: 5px;
+  align-self: flex-start;
+  
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 132, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #0084ff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+  }
+  
+  span {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
