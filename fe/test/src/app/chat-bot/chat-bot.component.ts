@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatService, ChatMessage } from '../services/chat.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat-bot',
@@ -10,7 +11,10 @@ export class ChatBotComponent {
   isLoading = false;
   newMessage = '';
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   get isOpen(): boolean {
     return this.chatService.isOpen;
@@ -22,6 +26,35 @@ export class ChatBotComponent {
 
   get messages(): ChatMessage[] {
     return this.chatService.messages;
+  }
+
+  // Format text for better display
+  formatMessage(text: string): SafeHtml {
+    if (!text) return '';
+    
+    // Replace newlines with <br> tags
+    let formattedText = text.replace(/\n/g, '<br>');
+    
+    // Format code blocks (text between ``` ```)
+    formattedText = formattedText.replace(/```([\s\S]*?)```/g, (match, code) => {
+      return `<pre class="code-block"><code>${code.trim()}</code></pre>`;
+    });
+    
+    // Format inline code (text between ` `)
+    formattedText = formattedText.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+    
+    // Format bold text (text between ** **)
+    formattedText = formattedText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    
+    // Format italic text (text between * *)
+    formattedText = formattedText.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    
+    // Format lists
+    formattedText = formattedText.replace(/^\s*-\s+(.*?)(?=<br>|$)/gm, '<li>$1</li>');
+    formattedText = formattedText.replace(/<li>(.*?)<\/li>(?:\s*<br>)*\s*<li>/g, '<li>$1</li><li>');
+    formattedText = formattedText.replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+    
+    return this.sanitizer.bypassSecurityTrustHtml(formattedText);
   }
 
   toggleChat() {

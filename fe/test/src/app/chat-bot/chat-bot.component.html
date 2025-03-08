@@ -18,9 +18,9 @@
       <div *ngFor="let message of messages" 
            class="message" 
            [ngClass]="{'bot-message': message.isBot, 'user-message': !message.isBot}">
-        {{ message.text }}
+        <span *ngIf="!message.isFormatted">{{ message.text }}</span>
+        <span *ngIf="message.isFormatted" [innerHTML]="formatMessage(message.text)"></span>
       </div>
-      <!-- Add this somewhere in your chat-messages div, after the messages loop -->
       <div *ngIf="isLoading" class="loading-spinner">
         <div class="spinner"></div>
         <span>{{ botName }} is typing...</span>
