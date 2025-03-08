@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChatService, ChatMessage } from '../services/chat.service';
 
 @Component({
   selector: 'app-chat-bot',
@@ -6,22 +7,31 @@ import { Component } from '@angular/core';
   styleUrls: ['./chat-bot.component.scss']
 })
 export class ChatBotComponent {
-  isOpen = false;
-  botName = 'Nestor';
   isLoading = false;
-  messages: {text: string, isBot: boolean}[] = [
-    {text: `Hi there! I'm ${this.botName}. How can I help you today?`, isBot: true}
-  ];
   newMessage = '';
 
+  constructor(private chatService: ChatService) {}
+
+  get isOpen(): boolean {
+    return this.chatService.isOpen;
+  }
+
+  get botName(): string {
+    return this.chatService.botName;
+  }
+
+  get messages(): ChatMessage[] {
+    return this.chatService.messages;
+  }
+
   toggleChat() {
-    this.isOpen = !this.isOpen;
+    this.chatService.toggleChat();
   }
 
   sendMessage() {
     if (this.newMessage.trim()) {
       // Add user message
-      this.messages.push({text: this.newMessage, isBot: false});
+      this.chatService.addUserMessage(this.newMessage);
       const userMessage = this.newMessage;
       this.newMessage = '';
       
@@ -30,10 +40,7 @@ export class ChatBotComponent {
 
       // Simulate bot response after a short delay
       setTimeout(() => {
-        this.messages.push({
-          text: `Thanks for your message: "${userMessage}". This is a demo response from ${this.botName}.`,
-          isBot: true
-        });
+        this.chatService.addBotMessage(`Thanks for your message: "${userMessage}". This is a demo response from ${this.botName}.`);
         // Hide loading spinner
         this.isLoading = false;
       }, 1000);
