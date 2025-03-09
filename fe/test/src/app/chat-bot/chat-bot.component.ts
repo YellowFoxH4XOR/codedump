@@ -156,7 +156,20 @@ export class ChatBotComponent {
     }
   }
 
+  // Add these properties to your component class
+  selectedBot = 'General Chat';
+  
+  // Add this method to your component class
+  switchBot(botType: string) {
+    if (this.selectedBot !== botType) {
+      this.selectedBot = botType;
+      this.chatService.setBotType(botType);
+      this.resetChat();
+    }
+  }
+  
+  // Update your resetChat method
   resetChat() {
-    this.chatService.clearMessages();
+    this.chatService.clearMessages(this.selectedBot);
   }
 }

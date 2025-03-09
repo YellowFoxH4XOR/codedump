@@ -31,9 +31,30 @@ export class ChatService {
     this.messages.push({text: message, isBot: true, isFormatted});
   }
 
-  clearMessages(): void {
+  // Add this method to your ChatService
+  setBotType(botType: string) {
+    switch(botType) {
+      case 'General Chat':
+        this.botName = 'Nestor';
+        break;
+      case 'Service Now':
+        this.botName = 'ServiceBot';
+        break;
+      case 'Internal F5':
+        this.botName = 'F5 Assistant';
+        break;
+      default:
+        this.botName = 'Nestor';
+    }
+    
+    // Update welcome message
+    this.clearMessages(botType);
+  }
+  
+  // Update clearMessages method to include bot type
+  clearMessages(botType: string = 'General Chat'): void {
     this.messages = [
-      {text: `Hi there! I'm ${this.botName}. How can I help you today?`, isBot: true, isFormatted: false}
+      {text: `Hi there! I'm ${this.botName}, your ${botType} assistant. How can I help you today?`, isBot: true, isFormatted: false}
     ];
   }
 }

@@ -22,6 +22,24 @@
       </div>
     </div>
     
+    <div class="bot-selector">
+      <button 
+        [class.active]="selectedBot === 'General Chat'" 
+        (click)="switchBot('General Chat')">
+        General Chat
+      </button>
+      <button 
+        [class.active]="selectedBot === 'Service Now'" 
+        (click)="switchBot('Service Now')">
+        Service Now
+      </button>
+      <button 
+        [class.active]="selectedBot === 'Internal F5'" 
+        (click)="switchBot('Internal F5')">
+        Internal F5
+      </button>
+    </div>
+    
     <div class="chat-messages">
       <div *ngFor="let message of messages" 
            class="message" 
